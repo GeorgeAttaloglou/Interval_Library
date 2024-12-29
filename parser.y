@@ -3,7 +3,8 @@
 #include <stdio.h>
 %}
 
-%token T_INTERVAL T_VECTOR T_NUMBER T_POS_INFINITY T_NEG_INFINITY
+%token T_INTERVAL T_IDENTIFIER T_INTERVALVECTOR 
+%token T_NUMBER T_POS_INFINITY T_NEG_INFINITY
 %token T_PLUS T_MINUS T_MULT T_DIV T_ASSIGN
 %token T_LPAREN T_RPAREN T_COMMA T_SEMICOLON
 
@@ -20,7 +21,7 @@ declaration_list:
 
 declaration:
     T_INTERVAL T_IDENTIFIER T_ASSIGN interval_expr T_SEMICOLON
-    | T_VECTOR T_IDENTIFIER T_ASSIGN vector_expr T_SEMICOLON
+    | T_INTERVALVECTOR T_IDENTIFIER T_ASSIGN vector_expr T_SEMICOLON
     ;
 
 interval_expr:
@@ -29,7 +30,7 @@ interval_expr:
     ;
 
 vector_expr:
-    T_VECTOR T_LPAREN interval_expr_list T_RPAREN
+    T_INTERVALVECTOR T_LPAREN interval_expr_list T_RPAREN
     ;
 
 interval_expr_list:

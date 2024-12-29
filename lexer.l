@@ -5,8 +5,8 @@
 
 %%
 
-"interval"          return T_INTERVAL;
-"vector"            return T_VECTOR;
+"Interval"          return T_INTERVAL;
+"IntervalVector"    return T_INTERVALVECTOR;
 [0-9]+(\.[0-9]+)?   return T_NUMBER;
 "\+"                return T_PLUS;
 "-"                 return T_MINUS;
@@ -17,6 +17,7 @@
 ")"                 return T_RPAREN;
 ","                 return T_COMMA;
 ";"                 return T_SEMICOLON;
+[a-zA-Z_][a-zA-Z0-9_]*   return T_IDENTIFIER; // Matches variable names
 
 [ \t\r\n]+          /* Ignore whitespace */
 
