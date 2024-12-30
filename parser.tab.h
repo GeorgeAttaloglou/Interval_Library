@@ -54,10 +54,10 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    T_INTERVAL = 258,              /* T_INTERVAL  */
-    T_IDENTIFIER = 259,            /* T_IDENTIFIER  */
-    T_INTERVALVECTOR = 260,        /* T_INTERVALVECTOR  */
-    T_NUMBER = 261,                /* T_NUMBER  */
+    T_IDENTIFIER = 258,            /* T_IDENTIFIER  */
+    T_NUMBER = 259,                /* T_NUMBER  */
+    T_INTERVAL = 260,              /* T_INTERVAL  */
+    T_INTERVALVECTOR = 261,        /* T_INTERVALVECTOR  */
     T_POS_INFINITY = 262,          /* T_POS_INFINITY  */
     T_NEG_INFINITY = 263,          /* T_NEG_INFINITY  */
     T_PLUS = 264,                  /* T_PLUS  */
@@ -75,7 +75,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 11 "parser.y"
+
+    char* id;     // For identifiers
+    double num;   // For numbers
+
+#line 86 "parser.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

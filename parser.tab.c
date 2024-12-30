@@ -69,10 +69,14 @@
 /* First part of user prologue.  */
 #line 1 "parser.y"
 
-#include "tokens.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#line 76 "parser.tab.c"
+int yylex(); // Declare lexer function
+void yyerror(const char* s); // Declare error reporting function
+
+#line 80 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -103,10 +107,10 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_T_INTERVAL = 3,                 /* T_INTERVAL  */
-  YYSYMBOL_T_IDENTIFIER = 4,               /* T_IDENTIFIER  */
-  YYSYMBOL_T_INTERVALVECTOR = 5,           /* T_INTERVALVECTOR  */
-  YYSYMBOL_T_NUMBER = 6,                   /* T_NUMBER  */
+  YYSYMBOL_T_IDENTIFIER = 3,               /* T_IDENTIFIER  */
+  YYSYMBOL_T_NUMBER = 4,                   /* T_NUMBER  */
+  YYSYMBOL_T_INTERVAL = 5,                 /* T_INTERVAL  */
+  YYSYMBOL_T_INTERVALVECTOR = 6,           /* T_INTERVALVECTOR  */
   YYSYMBOL_T_POS_INFINITY = 7,             /* T_POS_INFINITY  */
   YYSYMBOL_T_NEG_INFINITY = 8,             /* T_NEG_INFINITY  */
   YYSYMBOL_T_PLUS = 9,                     /* T_PLUS  */
@@ -452,7 +456,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  8
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   28
+#define YYLAST   29
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  18
@@ -512,8 +516,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    14,    14,    18,    19,    23,    24,    28,    29,    33,
-      37,    38
+       0,    29,    29,    33,    34,    38,    40,    45,    47,    52,
+      57,    58
 };
 #endif
 
@@ -529,8 +533,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "T_INTERVAL",
-  "T_IDENTIFIER", "T_INTERVALVECTOR", "T_NUMBER", "T_POS_INFINITY",
+  "\"end of file\"", "error", "\"invalid token\"", "T_IDENTIFIER",
+  "T_NUMBER", "T_INTERVAL", "T_INTERVALVECTOR", "T_POS_INFINITY",
   "T_NEG_INFINITY", "T_PLUS", "T_MINUS", "T_MULT", "T_DIV", "T_ASSIGN",
   "T_LPAREN", "T_RPAREN", "T_COMMA", "T_SEMICOLON", "$accept", "program",
   "declaration_list", "declaration", "interval_expr", "vector_expr",
@@ -558,9 +562,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,     3,     4,    10,    -2,   -20,    -1,     0,   -20,   -20,
-      -3,     9,    -4,     1,     2,     5,     7,     8,   -20,    -3,
-     -20,    11,    12,   -20,   -10,     6,    13,   -20,    -3,   -20,
+      -2,    -1,     5,    10,    -2,   -20,     0,     1,   -20,   -20,
+       2,     6,    -3,    -6,     3,     4,     7,     8,   -20,     2,
+     -20,    11,    12,   -20,    -9,    13,    14,   -20,     2,   -20,
      -20,   -20
 };
 
@@ -592,25 +596,25 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      23,     1,    16,     2,    17,    27,    28,     6,     7,    31,
-       8,    12,    10,    11,    14,     0,    19,    25,    18,    26,
-       9,    29,    20,    21,    22,     0,     0,     0,    30
+      23,    16,     6,     1,     2,    17,    27,    28,     7,    31,
+       8,    18,    14,    10,    11,    25,    12,    19,     0,    26,
+       9,    20,     0,    21,    22,     0,     0,     0,    29,    30
 };
 
 static const yytype_int8 yycheck[] =
 {
-      19,     3,     6,     5,     8,    15,    16,     4,     4,    28,
-       0,    14,    13,    13,     5,    -1,    14,     6,    17,     7,
-       4,    15,    17,    16,    16,    -1,    -1,    -1,    15
+      19,     4,     3,     5,     6,     8,    15,    16,     3,    28,
+       0,    17,     6,    13,    13,     4,    14,    14,    -1,     7,
+       4,    17,    -1,    16,    16,    -1,    -1,    -1,    15,    15
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     5,    19,    20,    21,     4,     4,     0,    21,
-      13,    13,    14,    22,     5,    23,     6,     8,    17,    14,
-      17,    16,    16,    22,    24,     6,     7,    15,    16,    15,
+       0,     5,     6,    19,    20,    21,     3,     3,     0,    21,
+      13,    13,    14,    22,     6,    23,     4,     8,    17,    14,
+      17,    16,    16,    22,    24,     4,     7,    15,    16,    15,
       15,    22
 };
 
@@ -1088,8 +1092,38 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 5: /* declaration: T_INTERVAL T_IDENTIFIER T_ASSIGN interval_expr T_SEMICOLON  */
+#line 39 "parser.y"
+        { printf("Interval '%s' assigned.\n", (yyvsp[-3].id)); free((yyvsp[-3].id)); }
+#line 1099 "parser.tab.c"
+    break;
 
-#line 1093 "parser.tab.c"
+  case 6: /* declaration: T_INTERVALVECTOR T_IDENTIFIER T_ASSIGN vector_expr T_SEMICOLON  */
+#line 41 "parser.y"
+        { printf("IntervalVector '%s' assigned.\n", (yyvsp[-3].id)); free((yyvsp[-3].id)); }
+#line 1105 "parser.tab.c"
+    break;
+
+  case 7: /* interval_expr: T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN  */
+#line 46 "parser.y"
+        { printf("Interval: [%f, %f]\n", (yyvsp[-3].num), (yyvsp[-1].num)); (yyval.num) = 0; }
+#line 1111 "parser.tab.c"
+    break;
+
+  case 8: /* interval_expr: T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN  */
+#line 48 "parser.y"
+        { printf("Interval: [-∞, +∞]\n"); (yyval.num) = 0; }
+#line 1117 "parser.tab.c"
+    break;
+
+  case 9: /* vector_expr: T_INTERVALVECTOR T_LPAREN interval_expr_list T_RPAREN  */
+#line 53 "parser.y"
+        { printf("IntervalVector created.\n"); (yyval.num) = 0; }
+#line 1123 "parser.tab.c"
+    break;
+
+
+#line 1127 "parser.tab.c"
 
       default: break;
     }
@@ -1282,14 +1316,19 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 41 "parser.y"
+#line 61 "parser.y"
 
 
-int main() {
-    yyparse();
-    return 0;
+void yyerror(const char* s) {
+    fprintf(stderr, "Error: %s\n", s);
 }
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Parse error: %s\n", s);
+int main() {
+    printf("Starting parser...\n");
+    if (yyparse() == 0) {
+        printf("Parsing completed successfully.\n");
+    } else {
+        printf("Parsing failed.\n");
+    }
+    return 0;
 }
