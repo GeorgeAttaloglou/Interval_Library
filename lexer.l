@@ -4,8 +4,8 @@
 
 %%
 
-"interval"          return T_INTERVAL;
-"intervalvector"    return T_INTERVALVECTOR;
+"Interval"          return T_INTERVAL;
+"IntervalVector"    return T_INTERVALVECTOR;
 [0-9]+(\.[0-9]+)?   { yylval.num = atof(yytext); return T_NUMBER; }
 [a-zA-Z_][a-zA-Z0-9_]* { yylval.id = strdup(yytext); return T_IDENTIFIER; }
 "\+"                return T_PLUS;
