@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 int yylex(); // Declare lexer function
 void yyerror(const char* s); // Declare error reporting function
@@ -17,11 +18,11 @@ void yyerror(const char* s); // Declare error reporting function
 %token <id> T_IDENTIFIER
 %token <num> T_NUMBER
 %token T_INTERVAL T_INTERVALVECTOR
-%token T_POS_INFINITY T_NEG_INFINITY
+%token <num> T_POS_INFINITY 
+%token <num> T_NEG_INFINITY
 %token T_PLUS T_MINUS T_MULT T_DIV T_ASSIGN
 %token T_LPAREN T_RPAREN T_COMMA T_SEMICOLON
 
-%type <num> interval_expr vector_expr
 
 %%
 
@@ -35,22 +36,21 @@ declaration_list:
     ;
 
 declaration:
-    T_INTERVAL T_IDENTIFIER T_ASSIGN interval_expr T_SEMICOLON
-        { printf("Interval '%s' assigned.\n", $2); free($2); }
-    | T_INTERVALVECTOR T_IDENTIFIER T_ASSIGN vector_expr T_SEMICOLON
-        { printf("IntervalVector '%s' assigned.\n", $2); free($2); }
+    T_INTERVAL T_IDENTIFIER T_SEMICOLON
+    | T_INTERVAL T_IDENTIFIER interval_expr T_SEMICOLON
+    | T_INTERVALVECTOR T_IDENTIFIER vector_expr T_SEMICOLON
     ;
 
 interval_expr:
-    T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN
-        { printf("Interval: [%f, %f]\n", $2, $4); $$ = 0; }
+     T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN
     | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN
-        { printf("Interval: [-∞, +∞]\n"); $$ = 0; }
+    | T_LPAREN T_NUMBER T_RPAREN
+    | T_LPAREN T_IDENTIFIER T_RPAREN
+    | T_IDENTIFIER T_ASSIGN T_IDENTIFIER
     ;
 
 vector_expr:
     T_INTERVALVECTOR T_LPAREN interval_expr_list T_RPAREN
-        { printf("IntervalVector created.\n"); $$ = 0; }
     ;
 
 interval_expr_list:
