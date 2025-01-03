@@ -37,7 +37,7 @@ declaration_list:
 declaration:
     T_INTERVAL T_IDENTIFIER T_SEMICOLON
     | T_INTERVAL T_IDENTIFIER interval_expr T_SEMICOLON
-    | T_INTERVALVECTOR T_IDENTIFIER vector_expr T_SEMICOLON
+    | T_INTERVALVECTOR T_IDENTIFIER intervalvector_expr T_SEMICOLON
     ;
 
 interval_expr:
@@ -65,6 +65,7 @@ void yyerror(const char* s) {
 
 int main() {
     printf("Starting parser...\n");
+    yyparse();
     if (yyparse() == 0) {
         printf("Parsing completed successfully.\n");
     } else {
