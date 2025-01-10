@@ -22,7 +22,6 @@ void yyerror(const char* s); // Declare error reporting function
 %token T_PLUS T_MINUS T_MULT T_DIV T_ASSIGN
 %token T_LPAREN T_RPAREN T_COMMA T_SEMICOLON
 
-
 %%
 
 program:
@@ -36,25 +35,28 @@ declaration_list:
 
 declaration:
     T_INTERVAL T_IDENTIFIER T_SEMICOLON
+        { free($2); }
     | T_INTERVAL T_IDENTIFIER interval_expr T_SEMICOLON
+        { free($2); }
     | T_INTERVALVECTOR T_IDENTIFIER intervalvector_expr T_SEMICOLON
+        { free($2); }
     ;
 
 interval_expr:
-    T_LPAREN T_IDENTIFIER T_RPAREN
-    | T_LPAREN T_NUMBER T_RPAREN
-    | T_IDENTIFIER T_ASSIGN T_IDENTIFIER
-    | T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN
-    | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN 
+    T_LPAREN T_IDENTIFIER T_RPAREN T_SEMICOLON
+    | T_LPAREN T_NUMBER T_RPAREN T_SEMICOLON
+    | T_IDENTIFIER T_ASSIGN T_IDENTIFIER T_SEMICOLON
+    | T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN T_SEMICOLON
+    | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN T_SEMICOLON
     ;
 
 intervalvector_expr:
-    T_INTERVALVECTOR T_IDENTIFIER T_LPAREN interval_expr_list T_RPAREN
+    T_INTERVALVECTOR T_IDENTIFIER T_LPAREN interval_expr_list T_RPAREN T_SEMICOLON
     ;
 
 interval_expr_list:
-    interval_expr_list T_COMMA interval_expr
-    | interval_expr
+    interval_expr_list T_COMMA interval_expr T_SEMICOLON
+    | interval_expr T_SEMICOLON
     ;
 
 %%
@@ -65,7 +67,6 @@ void yyerror(const char* s) {
 
 int main() {
     printf("Starting parser...\n");
-    yyparse();
     if (yyparse() == 0) {
         printf("Parsing completed successfully.\n");
     } else {

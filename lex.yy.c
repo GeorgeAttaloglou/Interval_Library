@@ -487,9 +487,8 @@ char *yytext;
 #line 2 "lexer.l"
 #include "parser.tab.h" // Includes token definitions from Bison
 void showerror();
-int Main();
+#line 490 "lex.yy.c"
 #line 491 "lex.yy.c"
-#line 492 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -706,10 +705,10 @@ YY_DECL
 		}
 
 	{
-#line 7 "lexer.l"
+#line 6 "lexer.l"
 
 
-#line 712 "lex.yy.c"
+#line 711 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -768,96 +767,96 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "lexer.l"
+#line 8 "lexer.l"
 { return (T_INTERVAL); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "lexer.l"
+#line 9 "lexer.l"
 { return (T_INTERVALVECTOR); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "lexer.l"
+#line 10 "lexer.l"
 { return (T_POS_INFINITY); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 12 "lexer.l"
+#line 11 "lexer.l"
 { return (T_NEG_INFINITY); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 13 "lexer.l"
-{ yylval.num = atoi(yytext); return (T_NUMBER); }
+#line 12 "lexer.l"
+{ yylval.num = atof(yytext); return (T_NUMBER); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "lexer.l"
-{ sscanf(yytext, "%s", yylval.id); return (T_IDENTIFIER); }
+#line 13 "lexer.l"
+{ yylval.id = strdup(yytext); return (T_IDENTIFIER); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 14 "lexer.l"
 { return (T_PLUS); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 15 "lexer.l"
 { return (T_MINUS); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 16 "lexer.l"
 { return (T_MULT); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 17 "lexer.l"
 { return (T_DIV); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 18 "lexer.l"
 { return (T_ASSIGN); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 19 "lexer.l"
 { return (T_LPAREN); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 20 "lexer.l"
 { return (T_RPAREN); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 22 "lexer.l"
+#line 21 "lexer.l"
 { return (T_COMMA); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 22 "lexer.l"
 { return (T_SEMICOLON); }
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 24 "lexer.l"
 /* Ignore whitespace */
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 26 "lexer.l"
 printf("Unexpected character: %s\n", yytext);
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 28 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 860 "lex.yy.c"
+#line 859 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1862,15 +1861,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 29 "lexer.l"
+#line 28 "lexer.l"
 
-void showerror(){
-    printf("Wrong input");
-}
 
-int Main(){
-    yylex();
-    return 0;
+void showerror() {
+    printf("Wrong input\n");
 }
 
 int yywrap() {
