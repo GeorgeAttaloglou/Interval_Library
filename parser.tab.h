@@ -54,20 +54,21 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    NUMBER = 258,                  /* NUMBER  */
-    IDENTIFIER = 259,              /* IDENTIFIER  */
-    INTERVAL = 260,                /* INTERVAL  */
-    POS_INFINITY = 261,            /* POS_INFINITY  */
-    NEG_INFINITY = 262,            /* NEG_INFINITY  */
-    EMPTY_SET = 263,               /* EMPTY_SET  */
-    ALL_REALS = 264,               /* ALL_REALS  */
-    PI = 265,                      /* PI  */
-    TWO_PI = 266,                  /* TWO_PI  */
-    HALF_PI = 267,                 /* HALF_PI  */
-    ZERO = 268,                    /* ZERO  */
-    ONE = 269,                     /* ONE  */
-    POS_REALS = 270,               /* POS_REALS  */
-    NEG_REALS = 271                /* NEG_REALS  */
+    T_IDENTIFIER = 258,            /* T_IDENTIFIER  */
+    T_NUMBER = 259,                /* T_NUMBER  */
+    T_INTERVAL = 260,              /* T_INTERVAL  */
+    T_INTERVALVECTOR = 261,        /* T_INTERVALVECTOR  */
+    T_POS_INFINITY = 262,          /* T_POS_INFINITY  */
+    T_NEG_INFINITY = 263,          /* T_NEG_INFINITY  */
+    T_PLUS = 264,                  /* T_PLUS  */
+    T_MINUS = 265,                 /* T_MINUS  */
+    T_MULT = 266,                  /* T_MULT  */
+    T_DIV = 267,                   /* T_DIV  */
+    T_ASSIGN = 268,                /* T_ASSIGN  */
+    T_LPAREN = 269,                /* T_LPAREN  */
+    T_RPAREN = 270,                /* T_RPAREN  */
+    T_COMMA = 271,                 /* T_COMMA  */
+    T_SEMICOLON = 272              /* T_SEMICOLON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -76,12 +77,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "parser.y"
+#line 12 "parser.y"
 
-    double num;          // Για αριθμούς
-    char str[100];    // Για ονόματα μεταβλητών
+    char* id;     // For identifiers
+    double num;   // For numbers
 
-#line 85 "parser.tab.h"
+#line 86 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
