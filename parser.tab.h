@@ -76,7 +76,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "parser.y"
+#line 19 "parser.y"
 
     double num;          // Για αριθμούς
     char str[100];    // Για ονόματα μεταβλητών

@@ -1,0 +1,3 @@
+Interval x;
+Interval y = (1, 2);
+Interval z = (NEG_INFINITY, 3.5);

@@ -80,7 +80,12 @@
 int yylex(void);
 void yyerror(const char *s);
 
-#line 84 "parser.tab.c"
+extern FILE *yyin;
+extern int yyparse();
+extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
+
+
+#line 89 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -533,9 +538,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    30,    30,    32,    36,    37,    38,    42,    43,    47,
-      48,    49,    50,    54,    55,    56,    57,    58,    59,    60,
-      61,    62
+       0,    35,    35,    37,    41,    42,    43,    47,    48,    52,
+      53,    54,    55,    59,    60,    61,    62,    63,    64,    65,
+      66,    67
 };
 #endif
 
@@ -1118,103 +1123,103 @@ yyreduce:
   switch (yyn)
     {
   case 6: /* statement: error ';'  */
-#line 38 "parser.y"
+#line 43 "parser.y"
                 { yyerror("Syntax error"); }
-#line 1124 "parser.tab.c"
+#line 1129 "parser.tab.c"
     break;
 
   case 7: /* variable_declaration: INTERVAL IDENTIFIER ';'  */
-#line 42 "parser.y"
+#line 47 "parser.y"
                                                       { printf("Variable %s initialized as (-∞, +∞)\n", (yyvsp[-1].str)); }
-#line 1130 "parser.tab.c"
+#line 1135 "parser.tab.c"
     break;
 
   case 8: /* variable_declaration: INTERVAL IDENTIFIER '=' interval_expression  */
-#line 43 "parser.y"
+#line 48 "parser.y"
                                                       { printf("Variable %s assigned an interval\n", (yyvsp[-2].str)); }
-#line 1136 "parser.tab.c"
+#line 1141 "parser.tab.c"
     break;
 
   case 9: /* interval_expression: '(' NUMBER ',' NUMBER ')'  */
-#line 47 "parser.y"
+#line 52 "parser.y"
                                      { printf("Interval [%f, %f]\n", (yyvsp[-3].num), (yyvsp[-1].num)); }
-#line 1142 "parser.tab.c"
+#line 1147 "parser.tab.c"
     break;
 
   case 10: /* interval_expression: '(' NUMBER ',' POS_INFINITY ')'  */
-#line 48 "parser.y"
+#line 53 "parser.y"
                                       { printf("Interval [%f, +∞)\n", (yyvsp[-3].num)); }
-#line 1148 "parser.tab.c"
+#line 1153 "parser.tab.c"
     break;
 
   case 11: /* interval_expression: '(' NEG_INFINITY ',' NUMBER ')'  */
-#line 49 "parser.y"
+#line 54 "parser.y"
                                       { printf("Interval (-∞, %f]\n", (yyvsp[-1].num)); }
-#line 1154 "parser.tab.c"
+#line 1159 "parser.tab.c"
     break;
 
   case 12: /* interval_expression: IDENTIFIER  */
-#line 50 "parser.y"
+#line 55 "parser.y"
                                      { printf("Reference to variable %s\n", (yyvsp[0].str)); }
-#line 1160 "parser.tab.c"
+#line 1165 "parser.tab.c"
     break;
 
   case 13: /* interval_constant: "Interval::PI"  */
-#line 54 "parser.y"
+#line 59 "parser.y"
                         { printf("Interval::PI\n"); }
-#line 1166 "parser.tab.c"
+#line 1171 "parser.tab.c"
     break;
 
   case 14: /* interval_constant: "Interval::TWO_PI"  */
-#line 55 "parser.y"
+#line 60 "parser.y"
                          { printf("Interval::TWO_PI\n"); }
-#line 1172 "parser.tab.c"
+#line 1177 "parser.tab.c"
     break;
 
   case 15: /* interval_constant: "Interval::HALF_PI"  */
-#line 56 "parser.y"
+#line 61 "parser.y"
                           { printf("Interval::HALF_PI\n"); }
-#line 1178 "parser.tab.c"
+#line 1183 "parser.tab.c"
     break;
 
   case 16: /* interval_constant: "Interval::EMPTY_SET"  */
-#line 57 "parser.y"
+#line 62 "parser.y"
                             { printf("Interval::EMPTY_SET\n"); }
-#line 1184 "parser.tab.c"
+#line 1189 "parser.tab.c"
     break;
 
   case 17: /* interval_constant: "Interval::ALL_REALS"  */
-#line 58 "parser.y"
+#line 63 "parser.y"
                             { printf("Interval::ALL_REALS\n"); }
-#line 1190 "parser.tab.c"
+#line 1195 "parser.tab.c"
     break;
 
   case 18: /* interval_constant: "Interval::ZERO"  */
-#line 59 "parser.y"
+#line 64 "parser.y"
                        { printf("Interval::ZERO\n"); }
-#line 1196 "parser.tab.c"
+#line 1201 "parser.tab.c"
     break;
 
   case 19: /* interval_constant: "Interval::ONE"  */
-#line 60 "parser.y"
+#line 65 "parser.y"
                       { printf("Interval::ONE\n"); }
-#line 1202 "parser.tab.c"
+#line 1207 "parser.tab.c"
     break;
 
   case 20: /* interval_constant: "Interval::POS_REALS"  */
-#line 61 "parser.y"
+#line 66 "parser.y"
                             { printf("Interval::POS_REALS\n"); }
-#line 1208 "parser.tab.c"
+#line 1213 "parser.tab.c"
     break;
 
   case 21: /* interval_constant: "Interval::NEG_REALS"  */
-#line 62 "parser.y"
+#line 67 "parser.y"
                             { printf("Interval::NEG_REALS\n"); }
-#line 1214 "parser.tab.c"
+#line 1219 "parser.tab.c"
     break;
 
 
-#line 1218 "parser.tab.c"
+#line 1223 "parser.tab.c"
 
       default: break;
     }
@@ -1407,23 +1412,37 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 65 "parser.y"
+#line 70 "parser.y"
 
 
 void yyerror(const char *s) {
-    std::cerr << "Error: " << s << std::endl;
+    std::cerr << "Error: " << s << " at token: " << yytext << std::endl;
 }
 
-int main() {
-    printf("Enter your program (end input with Ctrl+D):\n");
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
+    }
 
+    FILE *inputFile = fopen(argv[1], "r");
+    if (!inputFile) {
+        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
+        return 1;
+    }
+
+    // Αναθέτουμε το αρχείο εισόδου στο yyin
+    yyin = inputFile;
+
+    // Εκτελούμε την ανάλυση
     int parseResult = yyparse();
 
     if (parseResult == 0) {
-        printf("Parsing completed successfully.\n");
+        std::cout << "Parsing completed successfully." << std::endl;
     } else {
-        printf("Parsing failed. Please check your syntax.\n");
+        std::cerr << "Parsing failed. Check the syntax and the token causing the error." << std::endl;
     }
 
+    fclose(inputFile);
     return parseResult;
 }

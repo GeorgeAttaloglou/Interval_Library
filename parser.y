@@ -9,6 +9,11 @@
 // Forward declaration for yylex
 int yylex(void);
 void yyerror(const char *s);
+
+extern FILE *yyin;
+extern int yyparse();
+extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
+
 %}
 
 %union {
@@ -65,19 +70,33 @@ interval_constant:
 %%
 
 void yyerror(const char *s) {
-    std::cerr << "Error: " << s << std::endl;
+    std::cerr << "Error: " << s << " at token: " << yytext << std::endl;
 }
 
-int main() {
-    printf("Enter your program (end input with Ctrl+D):\n");
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
+    }
 
+    FILE *inputFile = fopen(argv[1], "r");
+    if (!inputFile) {
+        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
+        return 1;
+    }
+
+    // Αναθέτουμε το αρχείο εισόδου στο yyin
+    yyin = inputFile;
+
+    // Εκτελούμε την ανάλυση
     int parseResult = yyparse();
 
     if (parseResult == 0) {
-        printf("Parsing completed successfully.\n");
+        std::cout << "Parsing completed successfully." << std::endl;
     } else {
-        printf("Parsing failed. Please check your syntax.\n");
+        std::cerr << "Parsing failed. Check the syntax and the token causing the error." << std::endl;
     }
 
+    fclose(inputFile);
     return parseResult;
 }

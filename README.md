@@ -1,1 +1,1 @@
-To be written
+Works with input ./parser <input_file>
