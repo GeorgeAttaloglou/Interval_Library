@@ -19,8 +19,9 @@ void yyerror(const char* s); // Declare error reporting function
 %token <num> T_NUMBER
 %token T_INTERVAL T_INTERVALVECTOR
 %token <num> T_POS_INFINITY T_NEG_INFINITY
-%token T_PLUS T_MINUS T_MULT T_DIV T_ASSIGN
-%token T_LPAREN T_RPAREN T_COMMA T_SEMICOLON
+%token T_OPERATOR T_ASSIGN
+%token <num> T_PI T_TWO_PI T_HALF_PI T_EMPTY_SET T_ALL_REALS T_ZERO T_ONE T_POS_REALS T_NEG_REALS
+%token T_LPAREN T_RPAREN T_COMMA T_COLON T_SEMICOLON
 
 %%
 
@@ -48,6 +49,19 @@ interval_expr:
     | T_ASSIGN T_IDENTIFIER 
     | T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN 
     | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN 
+    | T_ASSIGN T_INTERVAL T_COLON constant 
+    ;
+
+constant:
+    T_PI 
+    | T_TWO_PI 
+    | T_HALF_PI 
+    | T_EMPTY_SET 
+    | T_ALL_REALS 
+    | T_ZERO 
+    | T_ONE 
+    | T_POS_REALS 
+    | T_NEG_REALS
     ;
 
 intervalvector_expr:

@@ -60,15 +60,22 @@ extern int yydebug;
     T_INTERVALVECTOR = 261,        /* T_INTERVALVECTOR  */
     T_POS_INFINITY = 262,          /* T_POS_INFINITY  */
     T_NEG_INFINITY = 263,          /* T_NEG_INFINITY  */
-    T_PLUS = 264,                  /* T_PLUS  */
-    T_MINUS = 265,                 /* T_MINUS  */
-    T_MULT = 266,                  /* T_MULT  */
-    T_DIV = 267,                   /* T_DIV  */
-    T_ASSIGN = 268,                /* T_ASSIGN  */
-    T_LPAREN = 269,                /* T_LPAREN  */
-    T_RPAREN = 270,                /* T_RPAREN  */
-    T_COMMA = 271,                 /* T_COMMA  */
-    T_SEMICOLON = 272              /* T_SEMICOLON  */
+    T_OPERATOR = 264,              /* T_OPERATOR  */
+    T_ASSIGN = 265,                /* T_ASSIGN  */
+    T_PI = 266,                    /* T_PI  */
+    T_TWO_PI = 267,                /* T_TWO_PI  */
+    T_HALF_PI = 268,               /* T_HALF_PI  */
+    T_EMPTY_SET = 269,             /* T_EMPTY_SET  */
+    T_ALL_REALS = 270,             /* T_ALL_REALS  */
+    T_ZERO = 271,                  /* T_ZERO  */
+    T_ONE = 272,                   /* T_ONE  */
+    T_POS_REALS = 273,             /* T_POS_REALS  */
+    T_NEG_REALS = 274,             /* T_NEG_REALS  */
+    T_LPAREN = 275,                /* T_LPAREN  */
+    T_RPAREN = 276,                /* T_RPAREN  */
+    T_COMMA = 277,                 /* T_COMMA  */
+    T_COLON = 278,                 /* T_COLON  */
+    T_SEMICOLON = 279              /* T_SEMICOLON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,7 +89,7 @@ union YYSTYPE
     char* id;     // For identifiers
     double num;   // For numbers
 
-#line 86 "parser.tab.h"
+#line 93 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
