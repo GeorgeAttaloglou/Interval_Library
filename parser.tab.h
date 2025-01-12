@@ -75,7 +75,11 @@ extern int yydebug;
     T_RPAREN = 276,                /* T_RPAREN  */
     T_COMMA = 277,                 /* T_COMMA  */
     T_COLON = 278,                 /* T_COLON  */
-    T_SEMICOLON = 279              /* T_SEMICOLON  */
+    T_SEMICOLON = 279,             /* T_SEMICOLON  */
+    T_PLUS = 280,                  /* T_PLUS  */
+    T_MINUS = 281,                 /* T_MINUS  */
+    T_MULT = 282,                  /* T_MULT  */
+    T_DIVIDE = 283                 /* T_DIVIDE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -89,7 +93,7 @@ union YYSTYPE
     char* id;     // For identifiers
     double num;   // For numbers
 
-#line 93 "parser.tab.h"
+#line 97 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
