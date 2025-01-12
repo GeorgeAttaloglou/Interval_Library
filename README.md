@@ -10,12 +10,11 @@ in the terminal enter these commands
 ---
 
 # TODO  
-1. Implement file read
-2. Add interval operation syntax
+1. Implement file read (Marios)
+2. Fix IntervalVector being recognized without semicolon but immediately throwing error next itteration.
+
+---
 
 # Resources
-- [lex and bison videos i found](https://www.youtube.com/watch?v=POjnw0xEVas)
+- [lex and bison videos](https://www.youtube.com/watch?v=POjnw0xEVas)
 - [eclass examples](https://www.dit.uoi.gr/e-class/modules/document/file.php/336/Flex_Examples.pdf)
-.
-.
-.
