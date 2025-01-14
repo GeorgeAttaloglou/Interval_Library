@@ -6,4 +6,4 @@ Interval x5(1,2);
 Interval x6(1,POS_INFINITY); 
 Interval x7(NEG_INFINITY,-1); 
 Interval x8=Interval::EMPTY_SET;
-IntervalVector v1(3);  
+IntervalVector x1(2,x3);  
