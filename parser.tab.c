@@ -71,13 +71,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
+#include <string.h>
+#include <iostream>
+#include <fstream>  // For file operations if used
+#include <cstdio>   // For yyin if using Flex/Bison
+using namespace std;
 
 int yylex(); // Declare lexer function
 void yyerror(const char* s); // Declare error reporting function
 
-#line 81 "parser.tab.c"
+extern FILE *yyin;
+extern int yyparse();
+extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
+
+
+#line 90 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -529,9 +538,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    30,    30,    34,    35,    39,    41,    43,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    61,    62,
-      63,    64,    65,    66,    67,    68,    69,    73
+       0,    39,    39,    43,    44,    48,    50,    52,    57,    58,
+      59,    60,    61,    62,    63,    64,    65,    66,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    82
 };
 #endif
 
@@ -1123,25 +1132,25 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* declaration: T_INTERVAL T_IDENTIFIER T_SEMICOLON  */
-#line 40 "parser.y"
+#line 49 "parser.y"
         { printf("Recognized interval declaration: %s \n", (yyvsp[-1].id)); free((yyvsp[-1].id)); }
-#line 1129 "parser.tab.c"
+#line 1138 "parser.tab.c"
     break;
 
   case 6: /* declaration: T_INTERVAL T_IDENTIFIER interval_expr T_SEMICOLON  */
-#line 42 "parser.y"
+#line 51 "parser.y"
         { printf("Recognized interval declaration with expression: %s\n", (yyvsp[-2].id)); free((yyvsp[-2].id)); }
-#line 1135 "parser.tab.c"
+#line 1144 "parser.tab.c"
     break;
 
   case 7: /* declaration: T_INTERVALVECTOR T_IDENTIFIER intervalvector_expr T_SEMICOLON  */
-#line 44 "parser.y"
+#line 53 "parser.y"
         { printf("Recognized interval vector declaration: %s\n", (yyvsp[-2].id)); free((yyvsp[-2].id)); }
-#line 1141 "parser.tab.c"
+#line 1150 "parser.tab.c"
     break;
 
 
-#line 1145 "parser.tab.c"
+#line 1154 "parser.tab.c"
 
       default: break;
     }
@@ -1334,19 +1343,38 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 76 "parser.y"
+#line 85 "parser.y"
 
 
-void yyerror(const char* s) {
-    fprintf(stderr, "Error: %s\n", s);
+
+void yyerror(const char *s) {
+    std::cerr << "Error: " << s << " at token: " << yytext << std::endl;
 }
 
-int main() {
-    printf("Starting parser...\n");
-    if (yyparse() == 0) {
-        printf("Parsing completed successfully.\n");
-    } else {
-        printf("Parsing failed.\n");
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
     }
-    return 0;
+
+    FILE *inputFile = fopen(argv[1], "r");
+    if (!inputFile) {
+        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
+        return 1;
+    }
+
+    // Αναθέτουμε το αρχείο εισόδου στο yyin
+    yyin = inputFile;
+
+    // Εκτελούμε την ανάλυση
+    int parseResult = yyparse();
+
+    if (parseResult == 0) {
+        std::cout << "Parsing completed successfully." << std::endl;
+    } else {
+        std::cerr << "Parsing failed. Check the syntax and the token causing the error." << std::endl;
+    }
+
+    fclose(inputFile);
+    return parseResult;
 }
