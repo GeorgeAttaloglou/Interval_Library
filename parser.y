@@ -1,11 +1,20 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
+#include <string.h>
+#include <iostream>
+#include <fstream>  // For file operations if used
+#include <cstdio>   // For yyin if using Flex/Bison
+using namespace std;
 
 int yylex(); // Declare lexer function
 void yyerror(const char* s); // Declare error reporting function
+
+extern FILE *yyin;
+extern int yyparse();
+extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
+
 %}
 
 // Define token types
@@ -75,16 +84,35 @@ intervalvector_expr:
 
 %%
 
-void yyerror(const char* s) {
-    fprintf(stderr, "Error: %s\n", s);
+
+void yyerror(const char *s) {
+    std::cerr << "Error: " << s << " at token: " << yytext << std::endl;
 }
 
-int main() {
-    printf("Starting parser...\n");
-    if (yyparse() == 0) {
-        printf("Parsing completed successfully.\n");
-    } else {
-        printf("Parsing failed.\n");
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
     }
-    return 0;
+
+    FILE *inputFile = fopen(argv[1], "r");
+    if (!inputFile) {
+        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
+        return 1;
+    }
+
+    // Αναθέτουμε το αρχείο εισόδου στο yyin
+    yyin = inputFile;
+
+    // Εκτελούμε την ανάλυση
+    int parseResult = yyparse();
+
+    if (parseResult == 0) {
+        std::cout << "Parsing completed successfully." << std::endl;
+    } else {
+        std::cerr << "Parsing failed. Check the syntax and the token causing the error." << std::endl;
+    }
+
+    fclose(inputFile);
+    return parseResult;
 }
