@@ -54,20 +54,31 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    NUMBER = 258,                  /* NUMBER  */
-    IDENTIFIER = 259,              /* IDENTIFIER  */
-    INTERVAL = 260,                /* INTERVAL  */
-    POS_INFINITY = 261,            /* POS_INFINITY  */
-    NEG_INFINITY = 262,            /* NEG_INFINITY  */
-    EMPTY_SET = 263,               /* EMPTY_SET  */
-    ALL_REALS = 264,               /* ALL_REALS  */
-    PI = 265,                      /* PI  */
-    TWO_PI = 266,                  /* TWO_PI  */
-    HALF_PI = 267,                 /* HALF_PI  */
-    ZERO = 268,                    /* ZERO  */
-    ONE = 269,                     /* ONE  */
-    POS_REALS = 270,               /* POS_REALS  */
-    NEG_REALS = 271                /* NEG_REALS  */
+    T_IDENTIFIER = 258,            /* T_IDENTIFIER  */
+    T_NUMBER = 259,                /* T_NUMBER  */
+    T_INTERVAL = 260,              /* T_INTERVAL  */
+    T_INTERVALVECTOR = 261,        /* T_INTERVALVECTOR  */
+    T_POS_INFINITY = 262,          /* T_POS_INFINITY  */
+    T_NEG_INFINITY = 263,          /* T_NEG_INFINITY  */
+    T_ASSIGN = 264,                /* T_ASSIGN  */
+    T_PI = 265,                    /* T_PI  */
+    T_TWO_PI = 266,                /* T_TWO_PI  */
+    T_HALF_PI = 267,               /* T_HALF_PI  */
+    T_EMPTY_SET = 268,             /* T_EMPTY_SET  */
+    T_ALL_REALS = 269,             /* T_ALL_REALS  */
+    T_ZERO = 270,                  /* T_ZERO  */
+    T_ONE = 271,                   /* T_ONE  */
+    T_POS_REALS = 272,             /* T_POS_REALS  */
+    T_NEG_REALS = 273,             /* T_NEG_REALS  */
+    T_LPAREN = 274,                /* T_LPAREN  */
+    T_RPAREN = 275,                /* T_RPAREN  */
+    T_COMMA = 276,                 /* T_COMMA  */
+    T_COLON = 277,                 /* T_COLON  */
+    T_SEMICOLON = 278,             /* T_SEMICOLON  */
+    T_PLUS = 279,                  /* T_PLUS  */
+    T_MINUS = 280,                 /* T_MINUS  */
+    T_MULT = 281,                  /* T_MULT  */
+    T_DIVIDE = 282                 /* T_DIVIDE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -76,12 +87,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 19 "parser.y"
+#line 12 "parser.y"
 
-    double num;          // Για αριθμούς
-    char str[100];    // Για ονόματα μεταβλητών
+    char* id;     // For identifiers
+    double num;   // For numbers
 
-#line 85 "parser.tab.h"
+#line 96 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

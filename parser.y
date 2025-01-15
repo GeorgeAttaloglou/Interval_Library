@@ -1,102 +1,103 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
-#include <iostream>
+#include <math.h>
 
-
-// Forward declaration for yylex
-int yylex(void);
-void yyerror(const char *s);
-
-extern FILE *yyin;
-extern int yyparse();
-extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
-
+int yylex(); // Declare lexer function
+void yyerror(const char* s); // Declare error reporting function
 %}
 
+// Define token types
 %union {
-    double num;          // Για αριθμούς
-    char str[100];    // Για ονόματα μεταβλητών
+    char* id;     // For identifiers
+    double num;   // For numbers
 }
 
-
-%token <num> NUMBER
-%token <str> IDENTIFIER
-%token INTERVAL
-%token POS_INFINITY NEG_INFINITY EMPTY_SET ALL_REALS PI TWO_PI HALF_PI ZERO ONE POS_REALS NEG_REALS
-
-%type <str> variable_declaration
-%type <str> interval_expression
+// Declare tokens and link them to their types
+%token <id> T_IDENTIFIER
+%token <num> T_NUMBER
+%token T_INTERVAL T_INTERVALVECTOR
+%token <num> T_POS_INFINITY T_NEG_INFINITY
+%token T_ASSIGN
+%token <num> T_PI T_TWO_PI T_HALF_PI T_EMPTY_SET T_ALL_REALS T_ZERO T_ONE T_POS_REALS T_NEG_REALS
+%token T_LPAREN T_RPAREN T_COMMA T_COLON T_SEMICOLON
+%token T_PLUS T_MINUS T_MULT T_DIVIDE
 
 %%
 
 program:
-    /* Empty */
-    | program statement
-;
+    declaration_list
+    ;
 
-statement:
-    variable_declaration ';'
-    | interval_constant ';'
-    | error ';' { yyerror("Syntax error"); }
-;
+declaration_list:
+    declaration_list declaration
+    | declaration
+    ;
 
-variable_declaration:
-    INTERVAL IDENTIFIER ';'                           { printf("Variable %s initialized as (-∞, +∞)\n", $2); }
-    | INTERVAL IDENTIFIER '=' interval_expression     { printf("Variable %s assigned an interval\n", $2); }
-;
+declaration:
+    T_INTERVAL T_IDENTIFIER T_SEMICOLON
+        { printf("Recognized interval declaration: %s \n", $2); free($2); }
+    | T_INTERVAL T_IDENTIFIER interval_expr T_SEMICOLON
+        { printf("Recognized interval declaration with expression: %s\n", $2); free($2); }
+    | T_INTERVALVECTOR T_IDENTIFIER intervalvector_expr T_SEMICOLON
+        { printf("Recognized interval vector declaration: %s\n", $2); free($2); }
+    | T_INTERVAL T_IDENTIFIER T_ASSIGN arithmetic_expr T_SEMICOLON 
+        { printf("Recognized interval declaration with assignment and calculation: %s\n", $2); free($2); }
+    | T_INTERVAL T_IDENTIFIER interval_const_expr T_SEMICOLON
+        { printf("Recognized interval declaration with constant expression: %s\n", $2); free($2); }     
+    ;
 
-interval_expression:
-    '(' NUMBER ',' NUMBER ')'        { printf("Interval [%f, %f]\n", $2, $4); }
-    | '(' NUMBER ',' POS_INFINITY ')' { printf("Interval [%f, +∞)\n", $2); }
-    | '(' NEG_INFINITY ',' NUMBER ')' { printf("Interval (-∞, %f]\n", $4); }
-    | IDENTIFIER                     { printf("Reference to variable %s\n", $1); }
-;
 
-interval_constant:
-    "Interval::PI"      { printf("Interval::PI\n"); }
-    | "Interval::TWO_PI" { printf("Interval::TWO_PI\n"); }
-    | "Interval::HALF_PI" { printf("Interval::HALF_PI\n"); }
-    | "Interval::EMPTY_SET" { printf("Interval::EMPTY_SET\n"); }
-    | "Interval::ALL_REALS" { printf("Interval::ALL_REALS\n"); }
-    | "Interval::ZERO" { printf("Interval::ZERO\n"); }
-    | "Interval::ONE" { printf("Interval::ONE\n"); }
-    | "Interval::POS_REALS" { printf("Interval::POS_REALS\n"); }
-    | "Interval::NEG_REALS" { printf("Interval::NEG_REALS\n"); }
-;
+interval_expr: 
+    T_LPAREN T_IDENTIFIER T_RPAREN
+    | T_LPAREN T_NUMBER T_RPAREN 
+    | T_ASSIGN T_IDENTIFIER T_SEMICOLON
+    | T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN 
+    | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN 
+    | T_LPAREN T_NEG_INFINITY T_COMMA T_NUMBER T_RPAREN
+    | T_LPAREN T_NUMBER T_COMMA T_NEG_INFINITY T_RPAREN
+    | T_LPAREN T_POS_INFINITY T_COMMA T_NUMBER T_RPAREN
+    | T_LPAREN T_NUMBER T_COMMA T_POS_INFINITY T_RPAREN
+    ;
+
+arithmetic_expr:
+    T_IDENTIFIER T_PLUS T_IDENTIFIER 
+    |  T_IDENTIFIER T_MINUS T_IDENTIFIER 
+    |  T_IDENTIFIER T_MULT T_IDENTIFIER 
+    |  T_IDENTIFIER T_DIVIDE T_IDENTIFIER
+
+interval_const_expr:
+    T_ASSIGN T_INTERVAL T_COLON constant 
+
+constant:
+    T_PI 
+    | T_TWO_PI 
+    | T_HALF_PI 
+    | T_EMPTY_SET 
+    | T_ALL_REALS 
+    | T_ZERO 
+    | T_ONE 
+    | T_POS_REALS 
+    | T_NEG_REALS
+    ;
+
+intervalvector_expr:
+    T_LPAREN T_NUMBER T_COMMA T_IDENTIFIER T_RPAREN
+    ;
 
 %%
 
-void yyerror(const char *s) {
-    std::cerr << "Error: " << s << " at token: " << yytext << std::endl;
+void yyerror(const char* s) {
+    fprintf(stderr, "Error: %s\n", s);
 }
 
-int main(int argc, char **argv) {
-    if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
-        return 1;
-    }
-
-    FILE *inputFile = fopen(argv[1], "r");
-    if (!inputFile) {
-        std::cerr << "Error: Could not open file " << argv[1] << std::endl;
-        return 1;
-    }
-
-    // Αναθέτουμε το αρχείο εισόδου στο yyin
-    yyin = inputFile;
-
-    // Εκτελούμε την ανάλυση
-    int parseResult = yyparse();
-
-    if (parseResult == 0) {
-        std::cout << "Parsing completed successfully." << std::endl;
+int main() {
+    printf("Starting parser...\n");
+    if (yyparse() == 0) {
+        printf("Parsing completed successfully.\n");
     } else {
-        std::cerr << "Parsing failed. Check the syntax and the token causing the error." << std::endl;
+        printf("Parsing failed.\n");
     }
-
-    fclose(inputFile);
-    return parseResult;
+    return 0;
 }
