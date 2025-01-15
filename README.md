@@ -18,3 +18,5 @@ in the terminal enter these commands
 # Resources
 - [lex and bison videos](https://www.youtube.com/watch?v=POjnw0xEVas)
 - [eclass examples](https://www.dit.uoi.gr/e-class/modules/document/file.php/336/Flex_Examples.pdf)
+
+###test
