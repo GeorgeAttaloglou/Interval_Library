@@ -10,8 +10,8 @@ in the terminal enter these commands
 ---
 
 # TODO  
-1. Implement file read (Marios)
-2. Fix IntervalVector being recognized without semicolon but immediately throwing error next itteration.
+1. Create header file for interval class
+2. Create constructor and use it in bison code.
 
 ---
 
