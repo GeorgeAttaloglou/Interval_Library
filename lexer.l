@@ -23,12 +23,12 @@ void showerror();
 [a-zA-Z_][a-zA-Z0-9_]*  { yylval.id = strdup(yytext); return (T_IDENTIFIER); }
 
 
+";"                     { return (T_SEMICOLON); }
 "::"                    { return (T_COLON); }
 "="                     { return (T_ASSIGN); }
 "("                     { return (T_LPAREN); }
 ")"                     { return (T_RPAREN); }
 ","                     { return (T_COMMA); }
-";"                     { return (T_SEMICOLON); }
 "\+"                     { return (T_PLUS); }
 "-"                     { return (T_MINUS); }
 "\*"                     { return (T_MULT); }

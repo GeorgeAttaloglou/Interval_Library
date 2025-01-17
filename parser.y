@@ -1,12 +1,11 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
+#include <math.h>
 #include <iostream>
 #include <fstream>  // For file operations if used
 #include <cstdio>   // For yyin if using Flex/Bison
-using namespace std;
 
 int yylex(); // Declare lexer function
 void yyerror(const char* s); // Declare error reporting function
@@ -14,7 +13,6 @@ void yyerror(const char* s); // Declare error reporting function
 extern FILE *yyin;
 extern int yyparse();
 extern char *yytext; // Χρησιμοποιείται για την εμφάνιση του token σε σφάλμα
-
 %}
 
 // Define token types
@@ -28,7 +26,7 @@ extern char *yytext; // Χρησιμοποιείται για την εμφάν�
 %token <num> T_NUMBER
 %token T_INTERVAL T_INTERVALVECTOR
 %token <num> T_POS_INFINITY T_NEG_INFINITY
-%token T_OPERATOR T_ASSIGN
+%token T_ASSIGN
 %token <num> T_PI T_TWO_PI T_HALF_PI T_EMPTY_SET T_ALL_REALS T_ZERO T_ONE T_POS_REALS T_NEG_REALS
 %token T_LPAREN T_RPAREN T_COMMA T_COLON T_SEMICOLON
 %token T_PLUS T_MINUS T_MULT T_DIVIDE
@@ -51,6 +49,10 @@ declaration:
         { printf("Recognized interval declaration with expression: %s\n", $2); free($2); }
     | T_INTERVALVECTOR T_IDENTIFIER intervalvector_expr T_SEMICOLON
         { printf("Recognized interval vector declaration: %s\n", $2); free($2); }
+    | T_INTERVAL T_IDENTIFIER T_ASSIGN arithmetic_expr T_SEMICOLON 
+        { printf("Recognized interval declaration with assignment and calculation: %s\n", $2); free($2); }
+    | T_INTERVAL T_IDENTIFIER interval_const_expr T_SEMICOLON
+        { printf("Recognized interval declaration with constant expression: %s\n", $2); free($2); }     
     ;
 
 interval_expr: 
@@ -59,12 +61,20 @@ interval_expr:
     | T_ASSIGN T_IDENTIFIER
     | T_LPAREN T_NUMBER T_COMMA T_NUMBER T_RPAREN 
     | T_LPAREN T_NEG_INFINITY T_COMMA T_POS_INFINITY T_RPAREN 
-    | T_ASSIGN T_INTERVAL T_COLON constant 
     | T_LPAREN T_NEG_INFINITY T_COMMA T_NUMBER T_RPAREN
     | T_LPAREN T_NUMBER T_COMMA T_NEG_INFINITY T_RPAREN
     | T_LPAREN T_POS_INFINITY T_COMMA T_NUMBER T_RPAREN
     | T_LPAREN T_NUMBER T_COMMA T_POS_INFINITY T_RPAREN
     ;
+
+arithmetic_expr:
+    T_IDENTIFIER T_PLUS T_IDENTIFIER 
+    |  T_IDENTIFIER T_MINUS T_IDENTIFIER 
+    |  T_IDENTIFIER T_MULT T_IDENTIFIER 
+    |  T_IDENTIFIER T_DIVIDE T_IDENTIFIER
+
+interval_const_expr:
+    T_ASSIGN T_INTERVAL T_COLON constant 
 
 constant:
     T_PI 
@@ -83,7 +93,6 @@ intervalvector_expr:
     ;
 
 %%
-
 
 void yyerror(const char *s) {
     std::cerr << "Error: " << s << " at token: " << yytext << std::endl;

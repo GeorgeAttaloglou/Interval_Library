@@ -362,10 +362,10 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[113] =
     {   0,
-        0,    0,   29,   27,   26,   26,   18,   19,   24,   22,
-       20,   23,   25,   14,   27,   21,   17,   15,   15,   15,
+        0,    0,   29,   27,   26,   26,   19,   20,   24,   22,
+       21,   23,   25,   14,   27,   16,   18,   15,   15,   15,
        15,   15,   15,   15,   15,   15,   15,   26,   14,    0,
-       16,   15,   15,   15,   15,   15,   15,   15,    5,   15,
+       17,   15,   15,   15,   15,   15,   15,   15,    5,   15,
        15,   15,   14,   15,   15,   15,   15,   15,   11,   15,
        15,   15,   15,   15,   15,   15,   15,   15,   15,   10,
        15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
@@ -873,32 +873,32 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 26 "lexer.l"
-{ return (T_COLON); }
+{ return (T_SEMICOLON); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 27 "lexer.l"
-{ return (T_ASSIGN); }
+{ return (T_COLON); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 28 "lexer.l"
-{ return (T_LPAREN); }
+{ return (T_ASSIGN); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 29 "lexer.l"
-{ return (T_RPAREN); }
+{ return (T_LPAREN); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 30 "lexer.l"
-{ return (T_COMMA); }
+{ return (T_RPAREN); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 31 "lexer.l"
-{ return (T_SEMICOLON); }
+{ return (T_COMMA); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP

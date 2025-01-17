@@ -60,26 +60,25 @@ extern int yydebug;
     T_INTERVALVECTOR = 261,        /* T_INTERVALVECTOR  */
     T_POS_INFINITY = 262,          /* T_POS_INFINITY  */
     T_NEG_INFINITY = 263,          /* T_NEG_INFINITY  */
-    T_OPERATOR = 264,              /* T_OPERATOR  */
-    T_ASSIGN = 265,                /* T_ASSIGN  */
-    T_PI = 266,                    /* T_PI  */
-    T_TWO_PI = 267,                /* T_TWO_PI  */
-    T_HALF_PI = 268,               /* T_HALF_PI  */
-    T_EMPTY_SET = 269,             /* T_EMPTY_SET  */
-    T_ALL_REALS = 270,             /* T_ALL_REALS  */
-    T_ZERO = 271,                  /* T_ZERO  */
-    T_ONE = 272,                   /* T_ONE  */
-    T_POS_REALS = 273,             /* T_POS_REALS  */
-    T_NEG_REALS = 274,             /* T_NEG_REALS  */
-    T_LPAREN = 275,                /* T_LPAREN  */
-    T_RPAREN = 276,                /* T_RPAREN  */
-    T_COMMA = 277,                 /* T_COMMA  */
-    T_COLON = 278,                 /* T_COLON  */
-    T_SEMICOLON = 279,             /* T_SEMICOLON  */
-    T_PLUS = 280,                  /* T_PLUS  */
-    T_MINUS = 281,                 /* T_MINUS  */
-    T_MULT = 282,                  /* T_MULT  */
-    T_DIVIDE = 283                 /* T_DIVIDE  */
+    T_ASSIGN = 264,                /* T_ASSIGN  */
+    T_PI = 265,                    /* T_PI  */
+    T_TWO_PI = 266,                /* T_TWO_PI  */
+    T_HALF_PI = 267,               /* T_HALF_PI  */
+    T_EMPTY_SET = 268,             /* T_EMPTY_SET  */
+    T_ALL_REALS = 269,             /* T_ALL_REALS  */
+    T_ZERO = 270,                  /* T_ZERO  */
+    T_ONE = 271,                   /* T_ONE  */
+    T_POS_REALS = 272,             /* T_POS_REALS  */
+    T_NEG_REALS = 273,             /* T_NEG_REALS  */
+    T_LPAREN = 274,                /* T_LPAREN  */
+    T_RPAREN = 275,                /* T_RPAREN  */
+    T_COMMA = 276,                 /* T_COMMA  */
+    T_COLON = 277,                 /* T_COLON  */
+    T_SEMICOLON = 278,             /* T_SEMICOLON  */
+    T_PLUS = 279,                  /* T_PLUS  */
+    T_MINUS = 280,                 /* T_MINUS  */
+    T_MULT = 281,                  /* T_MULT  */
+    T_DIVIDE = 282                 /* T_DIVIDE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -88,12 +87,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "parser.y"
+#line 19 "parser.y"
 
     char* id;     // For identifiers
     double num;   // For numbers
 
-#line 97 "parser.tab.h"
+#line 96 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
