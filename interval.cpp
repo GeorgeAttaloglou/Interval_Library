@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
+#include <vector>
 
 class Interval
 {
@@ -71,6 +72,12 @@ public:
     Interval add(const Interval &other) const // Ληψει ενος αλλου αντικειμενου Interval ως αναφορα για να αποφευχθει η αντιγραφη
     {
         return Interval(lower_bound + other.lower_bound, upper_bound + other.upper_bound); // Δημιουργια ενος νεου Interval αντικειμενου με την τελικη προσθεση
+    }
+
+    // Overload operator+
+    Interval operator+(const Interval &other) const
+    {
+        return add(other);
     }
 
     // Subtract two intervals
@@ -156,12 +163,107 @@ public:
     }
 };
 
+class IntervalVector {
+private:
+    std::vector<Interval> intervals;
+
+public:
+    IntervalVector(size_t size) : intervals(size, Interval()) {}
+    IntervalVector(size_t size, double arr[][2]) {
+        for (size_t i = 0; i < size; ++i) {
+            intervals.push_back(Interval(arr[i][0], arr[i][1]));
+        }
+    }
+
+    Interval& operator[](size_t index) {
+        if (index >= intervals.size()) {
+            throw std::out_of_range("Index out of range");
+        }
+        return intervals[index];
+    }
+
+    const Interval& operator[](size_t index) const {
+        if (index >= intervals.size()) {
+            throw std::out_of_range("Index out of range");
+        }
+        return intervals[index];
+    }
+
+    IntervalVector operator+(const IntervalVector& other) const {
+        if (intervals.size() != other.intervals.size()) {
+            throw std::invalid_argument("Size mismatch for addition");
+        }
+        IntervalVector result(intervals.size());
+        for (size_t i = 0; i < intervals.size(); ++i) {
+            result[i] = intervals[i] + other.intervals[i];
+        }
+        return result;
+    }
+
+    IntervalVector add(const IntervalVector& other) const {
+        if (intervals.size() != other.intervals.size()) {
+            throw std::invalid_argument("Size mismatch for addition");
+        }
+        IntervalVector result(intervals.size());
+        for (size_t i = 0; i < intervals.size(); ++i) {
+            result[i] = intervals[i].add(other.intervals[i]);
+        }
+        return result;
+    }
+    
+
+    IntervalVector multiply(const IntervalVector& other) const {
+        if (intervals.size() != other.intervals.size()) {
+            throw std::invalid_argument("Size mismatch for multiplication");
+        }
+        IntervalVector result(intervals.size());
+        for (size_t i = 0; i < intervals.size(); ++i) {
+            result[i] = intervals[i].multiply(other.intervals[i]);
+        }
+        return result;
+    }
+
+    IntervalVector subtract(const IntervalVector& other) const {
+        if (intervals.size() != other.intervals.size()) {
+            throw std::invalid_argument("Size mismatch for subtraction");
+        }
+        IntervalVector result(intervals.size());
+        for (size_t i = 0; i < intervals.size(); ++i) {
+            result[i] = intervals[i].subtract(other.intervals[i]);
+        }
+        return result;
+    }
+
+    IntervalVector division(const IntervalVector& other) const {
+        if (intervals.size() != other.intervals.size()) {
+            throw std::invalid_argument("Size mismatch for division");
+        }
+        IntervalVector result(intervals.size());
+        for (size_t i = 0; i < intervals.size(); ++i) {
+            result[i] = intervals[i].division(other.intervals[i]);
+        }
+        return result;
+    }
+
+    size_t size() const {
+        return intervals.size();
+    }
+
+    void print() const {
+        for (const auto& interval : intervals) {
+            interval.print();
+            std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
+};
+
+
 int main()
 {
-
     // Δημιουργια 2 intervals
-    Interval x(4.0, 2.0); // Interval [1.0, 2.0]
-    Interval y(0.0, 0.0); // Interval [3.0, 4.0]
+    Interval x(1.0, 2.0); // Interval [1.0, 2.0]
+    Interval y(3.0, 4.0); // Interval [3.0, 4.0]
     Interval empty = Interval::Empty();
     Interval infinites = Interval::infinite();
 
@@ -173,18 +275,35 @@ int main()
 
     // Αποτελεσματα
     std::cout << "\nSum: ";
-    sum.print(); // Expected: [6.0, 9.0]
+    sum.print(); // Expected: [4.0, 6.0]
     std::cout << "\nMultiplication: ";
-    multipli.print(); // Expected: [8.0, 18.0]
+    multipli.print(); // Expected: [3.0, 8.0]
     std::cout << "\nSubtraction ";
-    subtraction.print(); // Expected: [2.0, 3.0]
+    subtraction.print(); // Expected: [-3.0, -1.0]
     std::cout << "\nDivision ";
-    divide.print(); // Expected: [2.0, 2.0]
+    divide.print(); // Expected: [0.25, 0.6667]
     std::cout << "\nInterval is a ";
     empty.print();
-    std::cout << "\nInfinity ";
-    infinites.print();
-    std::cout << std::endl;
 
-    return 0;
+    // Δημιουργια 2 IntervalVectors
+    double arr1[][2] = {{1.0, 2.0}, {3.0, 4.0}};
+    double arr2[][2] = {{5.0, 6.0}, {7.0, 8.0}};
+    IntervalVector vec1(2, arr1);
+    IntervalVector vec2(2, arr2);
+
+    // Προσθεση, πολλαπλασιασμος, αφαιρεση και διαιρεση IntervalVectors
+    IntervalVector vec_sum = vec1.add(vec2);
+    IntervalVector vec_multipli = vec1.multiply(vec2);
+    IntervalVector vec_subtraction = vec1.subtract(vec2);
+    IntervalVector vec_divide = vec1.division(vec2);
+
+    // Αποτελεσματα
+    std::cout << "\nVector Sum: ";
+    vec_sum.print(); // Expected: [6.0, 8.0] [10.0, 12.0]
+    std::cout << "\nVector Multiplication: ";
+    vec_multipli.print(); // Expected: [5.0, 12.0] [21.0, 32.0]
+    std::cout << "\nVector Subtraction: ";
+    vec_subtraction.print(); // Expected: [-5.0, -3.0] [-5.0, -3.0]
+    std::cout << "\nVector Division: ";
+    vec_divide.print(); // Expected: [0.1667, 0.4] [0.375, 0.5714]
 }
