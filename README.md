@@ -12,7 +12,7 @@ in the terminal enter these commands
 # TODO  
 1. Create header file for interval class.
 2. Create constructor and use it in bison code.
-3. Create report indivisually.
+3. Create report individually.
 
 ---
 
