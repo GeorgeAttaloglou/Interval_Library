@@ -18,10 +18,10 @@ extern char *yytext; // Χρησιμοποιείται για την εμφάν�
 char addtotable(char, char, char);
 
 int index1 = 0;
-char temp = 'A' - 1;
+char temp = 'A' - 1; //Μεταβλητη που χρησιμοποιηται για παραγωγη προσωρινων ονοματων
 
 
-struct expr{
+struct expr{  //Δομη struct expr που αποθηκευει στοιχεια μιας πραξης
     
     char operand1;
     char operand2;
@@ -29,9 +29,9 @@ struct expr{
     char result;
 };
 
-struct expr arr[30];
+struct expr arr[30]; //Αποθηκευει το συνολο των ενδιαμεσων πραξεων που παραγονται
 
-char addtotable(char a, char b, char o){
+char addtotable(char a, char b, char o){ //Συναρτηση που προσθετει μια νεα πραξη στον arr
     temp++;
     arr[index1].operand1 = a;
     arr[index1].operand2 = b;
@@ -42,7 +42,7 @@ char addtotable(char a, char b, char o){
     return temp;
 }
 
-void threeAdd(){
+void threeAdd(){ //Συναρτηση που εκτυπωνει τις πραξεις ως τριπλη διευθυνση
 
     int i = 0;
     char temp = 'A';
@@ -57,7 +57,7 @@ void threeAdd(){
     }
 }
 
-void fourAdd(){
+void fourAdd(){ //Συναρτηση που εκτυπωνει τις πραξεις σε μορφη τετραδων
     int i = 0;
     char temp = 'A';
     while(i < index1){
@@ -71,7 +71,7 @@ void fourAdd(){
     }
 }
 
-int find(char p){
+int find(char p){ //Συναρτηση που αναζητα τη θεση μιας προσωρινης μεταβλητης στον arr
     int i;
     for(i = 0; i < index1; i++){
         if(arr[i].result == p) break;
@@ -79,7 +79,7 @@ int find(char p){
     }
 }
 
-void triple(){
+void triple(){ //Συναρτηση που εκτυπωνει τις πραξεις σε μορφη τριπλων με χρηση δεικτων αντι για ονοματα προσωρινων μεταβλητων
     int i = 0;
     char temp = 'A';
     while(i < index1){
