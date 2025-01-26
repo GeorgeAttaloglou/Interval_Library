@@ -4,12 +4,12 @@
 #include <string.h>
 #include <math.h>
 #include <iostream>
-#include <fstream>  // For file operations if used
-#include <cstdio>   // For yyin if using Flex/Bison
+#include <fstream>  // Για την χρηση των φακελων 
+#include <cstdio>   // Για την χρηση yyin 
 #include <ctype.h>
 
-int yylex(); // Declare lexer function
-void yyerror(const char* s); // Declare error reporting function
+int yylex(); // Δηλωση της συναρτησης lexer
+void yyerror(const char* s); // Δηλωση της συναρτησης που χειριζεται τα σφαλματα
 
 extern FILE *yyin;
 extern int yyparse();
@@ -110,14 +110,14 @@ void triple(){ //Συναρτηση που εκτυπωνει τις πραξε�
 
 
 
-// Define token types
+// Ορισμός των τυπών των tokens
 %union {
-    char id;     // For identifiers
-    double num;   // For numbers
+    char id;     
+    double num;   
     char ch;
 }
 
-// Declare tokens and link them to their types
+// Δηλώνουμε τα tokens και τους συνδέουμε με τους τύπους τους
 %token <id> T_IDENTIFIER
 %token <num> T_NUMBER
 %token T_INTERVAL T_INTERVALVECTOR
