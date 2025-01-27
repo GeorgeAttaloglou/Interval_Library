@@ -1,8 +1,5 @@
 %{
 #include "parser.tab.h" // Includes token definitions from Bison
-#include <cmath>
-#include <cstdlib>
-#include <string>
 void showerror();
 %}
 
@@ -23,7 +20,7 @@ void showerror();
 "NEG_REALS"             { return (T_NEG_REALS); }
 
 -?[0-9]+(\.[0-9]+)?     { yylval.num = atof(yytext); return (T_NUMBER); }
-[a-zA-Z_][a-zA-Z0-9_]*  { yylval.id = (char)(yytext[0]); return (T_IDENTIFIER); }
+[a-zA-Z_][a-zA-Z0-9_]*  { yylval.id = strdup(yytext); return (T_IDENTIFIER); }
 
 
 ";"                     { return (T_SEMICOLON); }
@@ -32,7 +29,7 @@ void showerror();
 "("                     { return (T_LPAREN); }
 ")"                     { return (T_RPAREN); }
 ","                     { return (T_COMMA); }
-"\+"                     { return (T_PLUS); }
+"\+"                    { return (T_PLUS); }
 "-"                     { return (T_MINUS); }
 "\*"                     { return (T_MULT); }
 "/"                     { return (T_DIVIDE); }
