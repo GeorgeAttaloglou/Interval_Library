@@ -5,7 +5,7 @@ in the terminal enter these commands
 - flex lexer.l > creates lex.yy.c file
 - bison -d parser.y > creates parser.tab.c/h
 - g++ parser.tab.c lex.yy.c -o parser > creates parser
-- ./parser > executes parser
+- ./parser test.txt > executes parser
 
 ---
 
